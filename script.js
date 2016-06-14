@@ -22,22 +22,55 @@ $(document).ready(function() {
     }
   });
 
+ 
 
+
+// Sentiment Request
+// function getSentiment(text) {
+//   $.ajax({
+//     method: "GET",
+//     data: "text="+text,
+//     url:"https://twinword-sentiment-analysis.p.mashape.com/analyze/?text=great+value+in+its+price+range!",
+//     headers:{"X-Mashape-Key": "IU5RDQiu0omshnKfW2nXe6Qe891Hp16W0Vjjsnwn8zDAeD07gY","Accept": "application/json",},
+//     success: analyzeSentiments,
+//     error: function() {
+//     alert("there has been an error...")
+//     }
+// });
+  console.log("yo");
+// }
+
+
+// function analyzeSentiments(data) {
+//   // console.log(data);
+//   var totalScore = 0
+//   for(var i=0; i<data[i].length; i++){
+//     totalScore += data[i].score;
+//   }
+//   var avgScore = totalScore/imgCount;
+//   $(".instaimages").append("<div class='score'>"+avgScore);
+// };
+// lenght is undefined, I don't know why. 
+
+
+// end of sentiment stuff
 
 function handleResponse(response) {
+  console.log(response);
   imgCount = response.data.length;
-  for (var i = 0; i <= response.data.length-1; i++) {
-    $(".instaimages").append("<img class=pics src='"+response.data[i].images.standard_resolution.url+"'/>");
-    $(".instaimages").append(response.data[i].caption.text);
+  for (var i = 0; i <= response.data.length-1; i++) { //this is looping through instagram objects from the API
+    $(".instaimages").append("<div class='images'><img class='pic' src='"+response.data[i].images.standard_resolution.url+"'/></div>");
+    $(".instaimages").append("<div class='text'>"+response.data[i].caption.text+"</div>");
+    // getSentiment(response.data[i].caption.text); // makes a get request to the Sentiment API with the caption of this particular image
   } 
+  
   getEgoResponse();
   averageNumberLikes(response);
   avgCaptionLength(response);
   visibilityThirst(response);
+  activedays(response);
+  
 }
-
-// this styling code does not work, I don't know why
-$("img.pics").css({"max-height": "500px", "max-width": "480px", "border-radius": "4px"});
 
 
 //Stage 3: Stats on Stats - Ego Score
@@ -63,7 +96,7 @@ function handleEgoResponse(egoResponse){
     if (egoResponse.data[i].user_has_liked) {
       count++;
     }
-      // $("#egotext").append('I liked '+count+' of my own images');
+  
 
 
   var percentage = (count/imgCount)*100;
@@ -87,6 +120,37 @@ function handleEgoResponse(egoResponse){
   }; 
 
 // Stage 3: Stats on Stats - Active Days
+
+function activedays(response) {
+  console.log("We are in active days");
+  var days=[0,0,0,0,0,0,0];
+  var week=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  for (var i=0; i<response.data.length; i++){
+    var time = parseInt(response.data[i].created_time);
+    var date = new Date(time*1000);
+    days[date.getDay()]++;  
+  }
+  console.log(days);
+  // for loop for days
+  var biggestDay = 0;
+  console.log("We are about to loop through days");
+  for (var i=0; i<=days.length; i++){
+    if (days[i] > biggestDay){
+      biggestDay = 0 + days[i];
+      console.log(biggestDay);
+      // var dayOfWeek = days[i];
+      var dayOfWeekIndex = days.indexOf(biggestDay);
+      console.log(dayOfWeekIndex);
+    };
+console.log(dayOfWeekIndex.text);
+ // console.log(week[0]);
+    
+  }
+  var mostActiveDay = week[(Math.max.apply(Math, days))]; 
+  $("#activedays").append("The most common day I post pictures on is "+mostActiveDay);
+};
+
+
 
 // Stage 3: Stats on Stats - Brevity
 

@@ -1,4 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Amatic+SC);
+
+body {
+	background-color: #F0D8D8;
+	padding-top: 15px;
+}
+
+
 p {
 	text-align: center; 
 }
+
+.instaimages {
+	width: 100%;
+	padding-top: 10px;
+	margin: auto;
+
+}
+
+div.text {
+	max-width: 480px;
+	text-align: justify;
+}
+
+.pic {
+	border-radius: 4px;
+	max-height: 480px;
+	max-width: 480px;
+
+}
+
+.stats {
+	font-family: Arial; 
+	font-size: 14px; 
+}
+
+.loginpageheader {
+	padding: 15px; 
+	text-align: center; 
+	font-size: 30px;
+	font-family: Amatic SC;
+	color: #fff; 
+	background-color:  black;
+	border-radius:4px;
+	margin-top: 150px;
+}
+
+.sign-in{
+	padding-top: 175px;
+}
+
+.pageheader {
+	padding: 15px; 
+	text-align: center; 
+	font-family: Amatic SC;
+	font-size: 30px;
+	color: #fff; 
+	background-color:  black;
+	border-radius:4px;
+}
+
+
+.loginbutton{
+	color: white;
+	
+}
+
+.loginbutton:hover {
+	color:  #669999;
+	text-decoration: none;
+}
+
+.line {
+	color: black ;
+}
+
+
 
